@@ -1,0 +1,126 @@
+{% macro ticketCounterWidget(ticket_type_text, ticket_count, ticket_status, outer_color, inner_color) %}
+    <div class="countercard-widget">
+        <p>{{ticket_type_text}}</p>
+        <h6>{{ticket_count}}</h6>
+        <div class="widget-footer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="12" fill="{{outer_color}}" fill-opacity="0.24"/>
+              <circle cx="12" cy="12" r="5" fill="{{inner_color}}"/>
+            </svg>
+            <p><strong>{{ticket_status}}</strong></p>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro cfpCounterWidget(session_count, session_type) %}
+    <div class="countercard-widget">
+        <h6>{{session_count}}</h6>
+        <p><strong>{{session_type}}</strong></p>
+    </div>
+{% endmacro %}
+
+<div class="container">
+    <div class="stats-main-header">
+        <h4>IndiaFOSS 2024 Live Stats</h4>
+    </div>
+
+    <div class="stats-sub-section">
+        <div class="stats-sub-header">
+            <h5>Ticket Sales</h5>
+            <a class="cta-button" href="https://fossunited.org/indiafoss/buy-tickets">Get Tickets</a>
+        </div>
+
+        {{ ticketCounterWidget(
+            "TOTAL TICKETS SOLD",
+            frappe.get_all("FOSS Event Ticket", filters={'event':'93baa1a4d5'}) | length + 220,
+            "Open",
+            "#08B74F",
+            "#08B74F"
+        ) }}
+
+        <div class="widget-grid">
+            
+           {% set generalTicketCount = frappe.get_all("FOSS Event Ticket", filters={'event':'93baa1a4d5', 'tier':'General Ticket'}) %}
+            
+            {{ ticketCounterWidget(
+                "General Tickets Sold",
+                generalTicketCount | length,
+                (280 - generalTicketCount | length) ~ " Tickets Available",
+                "#08B74F",
+                "#08B74F"
+            ) }}
+
+            {{ ticketCounterWidget(
+                "Contributor Tickets Sold",
+                frappe.get_all("FOSS Event Ticket", filters={'event':'93baa1a4d5', 'tier':'Contributor'}) | length,
+                "Open Now",
+                "#08B74F",
+                "#08B74F"
+            ) }}
+
+            {{ ticketCounterWidget(
+                "Student Tickets Sold",
+                frappe.get_all("FOSS Event Ticket", filters={'event':'93baa1a4d5', 'tier':'Student Ticket'}) | length,
+                "Closed",
+                "#C6C6C6",
+                "#B8B8B8"
+            ) }}
+
+            {{ ticketCounterWidget(
+                "Early Bird Tickets Sold",
+                frappe.get_all("FOSS Event Ticket", filters={'event':'93baa1a4d5', 'tier':'Early Bird'}) | length,
+                "Closed",
+                "#C6C6C6",
+                "#B8B8B8"
+            ) }}
+        </div>
+        
+        <p>220 General Tickets are free and reserved for Speakers, Sponsors, Volunteers, Booths' and Workshop Facilitators, Diversity Scholars etc.</p>
+        
+        <div class="free-ticket-breakup">
+            <ul>
+                <li><span>50</span> Speakers</li>
+                <li><span>50</span> Sponsors</li>
+                <li><span>40</span> Volunteers</li>
+                <li><span>60</span> Booths' + Workshop Facilitators</li>
+                <li><span>20</span> Diversity Scholars</li>
+            </ul>
+        </div>
+    </div>
+    
+     <div class="stats-sub-section">
+        <div class="stats-sub-header">
+            <h5>Proposals</h5>
+            <a class="cta-button" href="https://fossunited.org/events/indiafoss24/cfp/all">View Submissions</a>
+        </div>
+        
+        {{ ticketCounterWidget(
+            "TOTAL CFP SUBMISSIONS",
+            frappe.get_all("FOSS Event CFP Submission", filters={'event':'93baa1a4d5'}) | length,
+            "Closed",
+            "#C6C6C6",
+            "#B8B8B8"
+        ) }}
+        
+        <div class="widget-grid" id="cfps">
+            
+        {{ cfpCounterWidget(
+            frappe.get_all("FOSS Event CFP Submission", filters={'event':'93baa1a4d5', 'session_type':'Talk'}) | length,
+            "Talks"
+        ) }}
+        
+        {{ cfpCounterWidget(
+            frappe.get_all("FOSS Event CFP Submission", filters={'event':'93baa1a4d5', 'session_type':'Lightning Talk'}) | length,
+            "Lightning Talks"
+        ) }}
+        
+        {{ cfpCounterWidget(
+            frappe.get_all("FOSS Event CFP Submission", filters={'event':'93baa1a4d5', 'session_type':'Workshop'}) | length,
+            "Workshops"
+        ) }}
+            
+        
+        </div>
+
+    </div>
+</div>
