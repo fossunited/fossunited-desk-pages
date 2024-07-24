@@ -1,0 +1,49 @@
+{% set job = frappe.get_doc('Job Board', frappe.form_dict ) %}
+
+<div class="container my-4 py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/jobs">All Jobs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ job.job_title }} at {{ job.company_name }}</li>
+        </ol>
+    </nav>
+    <div class="d-flex flex-row justify-content-between">
+        <div>
+            <h4 class="job-title"> {{ job.job_title }}</h4>
+        </div>
+        <div class="application-link">
+            <a class="primary-button" href="{{ job.application_link }}">Apply </a>
+        </div>
+    </div>
+    
+    <div class="job-details">
+        <div class="detail">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-buildings"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" /><path d="M16 8h2c1 0 2 1 2 2v11" /><path d="M3 21h18" /><path d="M10 12v0" /><path d="M10 16v0" /><path d="M10 8v0" /><path d="M7 12v0" /><path d="M7 16v0" /><path d="M7 8v0" /><path d="M17 12v0" /><path d="M17 16v0" /></svg> <path d="M9 18l0 .01" />
+            </svg>
+            <h6 class="py-5"><a href="{{ job.company_website }}">{{ job.company_name }}</a></h6>
+        </div>
+        <div class="detail">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
+            <h6>{{ job.job_location }}</h6>
+        </div>
+        <div class="detail">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9z" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+            <h6>{{ job.job_type }}</h6>
+        </div>
+    </div>
+    <div class="job-desc mt-5 ">
+        <h5 class="mb-2">Job Description</h5>
+
+        {{ frappe.utils.md_to_html(job.job_description) }}
+    </div>
+</div>
+
+<div class="container job-cta py-5">
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <h5>Have an opening at your place ?</h5>
+        <a class="primary-button" href="https://fossunited.org/post-a-job">
+            Post a Job
+        </a>
+    </div>
+</div>
